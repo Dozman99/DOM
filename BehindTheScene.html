@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // create here
+        const getIDs = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject([523, 582, 432, 978]);
+            }, 2000);
+        });
+
+        const getRecipe = (recID) => {
+            return new Promise((resolve, reject) => {
+                setTimeout(
+                    (id) => {
+                        const recipe = { title: 'fresh tomato pasta', publisher: 'Dozman' };
+                        resolve(`${id}: ${recipe.title}`);
+                    },
+                    1500,
+                    recID,
+                );
+            });
+        };
+
+        const getRelated = (publisher) => {
+            return new Promise((resolve, reject) => {
+                setTimeout(
+                    (pub) => {
+                        const recipe2 = { title: 'Italian pizza', publisher: 'Jonas' };
+                        resolve(`${pub}: ${recipe2.title}`);
+                    },
+                    1000,
+                    publisher,
+                );
+            });
+        };
+        // consume here
+        getIDs
+            .then((IDs) => {
+                console.log(IDs);
+                return getRecipe(IDs[2]);
+            })
+            .then((firstRecipe) => {
+                console.log(firstRecipe);
+                return getRelated('Code Dozman');
+            })
+            .then((secondRecipe) => {
+                console.log(secondRecipe);
+            })
+            //   the same thing for object.catch, it takes in the reject data if its like this const getIDs = new Promise((resolve, reject) => {
+            //   setTimeout(() => {
+            //     reject([523, 582, 432, 978]);
+            //   }, 1500);
+            // });
+            .catch((serror) => {
+                console.log('somthing went wrong');
+            });
+    </script>
+</body>
+
+
+</html>
